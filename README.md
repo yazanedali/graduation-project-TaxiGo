@@ -41,12 +41,6 @@ Built using modern technologies to ensure performance, security, and scalability
 
 ---
 
-## 📸 Screenshots
-
-> (You can upload screenshots here using `![screenshot](link)` once pushed)
-
----
-
 ## 🧠 How It Works
 
 ```bash
