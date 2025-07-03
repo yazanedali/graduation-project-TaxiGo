@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSM Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://nominatim.openstreetmap.org/ui/search.js"></script>
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+        }
+        #search {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="search" placeholder="ابحث عن مكان..." onkeypress="handleKeyPress(event)">
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([32.1806, 35.3313], 12);
+
+        // إضافة طبقة OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        var startMarker, endMarker, routeLayer;
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                searchLocation();
+            }
+        }
+
+        function searchLocation() {
+            var query = document.getElementById("search").value;
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        var lat = data[0].lat;
+                        var lon = data[0].lon;
+                        map.setView([lat, lon], 14);
+                        if (!startMarker) {
+                            startMarker = L.marker([lat, lon]).addTo(map).bindPopup("نقطة البداية");
+                        } else {
+                            startMarker.setLatLng([lat, lon]);
+                        }
+                    } else {
+                        alert("لم يتم العثور على الموقع");
+                    }
+                });
+        }
+
+        function setEndPoint(lat, lon) {
+            if (!endMarker) {
+                endMarker = L.marker([lat, lon], { color: "red" }).addTo(map).bindPopup("نقطة النهاية");
+            } else {
+                endMarker.setLatLng([lat, lon]);
+            }
+            if (startMarker) {
+                getRoute(startMarker.getLatLng(), endMarker.getLatLng());
+            }
+        }
+
+        function getRoute(start, end) {
+            var url = `https://router.project-osrm.org/route/v1/driving/${start.lng},${start.lat};${end.lng},${end.lat}?overview=full&geometries=geojson`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var coordinates = data.routes[0].geometry.coordinates;
+                    var route = coordinates.map(coord => [coord[1], coord[0]]);
+
+                    if (routeLayer) {
+                        map.removeLayer(routeLayer);
+                    }
+                    routeLayer = L.polyline(route, { color: 'blue', weight: 5 }).addTo(map);
+                });
+        }
+
+        map.on('click', function (e) {
+            setEndPoint(e.latlng.lat, e.latlng.lng);
+        });
+    </script>
+</body>
+</html>

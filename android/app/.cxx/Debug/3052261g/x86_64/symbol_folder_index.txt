@@ -1,0 +1,1 @@
+C:\taxi_app\build\app\intermediates\cxx\Debug\3052261g\obj\x86_64

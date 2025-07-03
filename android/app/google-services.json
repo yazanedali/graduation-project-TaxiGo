@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "395640507425",
+    "project_id": "taxigo-c21a4",
+    "storage_bucket": "taxigo-c21a4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395640507425:android:0846a685406ce5e1bb2760",
+        "android_client_info": {
+          "package_name": "com.example.taxi_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT7ewNlHEJM_JCTumWOXBI-xTm3CXzHzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

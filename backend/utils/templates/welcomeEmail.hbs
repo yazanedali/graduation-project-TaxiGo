@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>مرحباً بك في TaxiGo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    .header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
+    .header-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .logo {
+      height: 60px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    .content {
+      padding: 30px;
+    }
+    h1 {
+      color: #1e3a8a;
+      text-align: center;
+      margin-top: 0;
+    }
+    .welcome-text {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #4a5568;
+    }
+    .info-card {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 4px solid #3b82f6;
+    }
+    .info-item {
+      margin: 10px 0;
+    }
+    .highlight {
+      color: #1e40af;
+      font-weight: bold;
+    }
+    .btn {
+      display: block;
+      background: linear-gradient(to right, #3b82f6, #1e40af);
+      color: white !important;
+      text-align: center;
+      padding: 12px 0;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 25px auto;
+      width: 80%;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    .steps {
+      margin: 30px 0;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+    }
+    .step-number {
+      background: #3b82f6;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 15px;
+      flex-shrink: 0;
+    }
+    .footer {
+      background: #1e3a8a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="cid:logo" alt="TaxiGo Logo" class="logo">
+      <img src="cid:welcome" alt="Welcome" class="header-image">
+    </div>
+
+    <div class="content">
+      <h1>مرحباً {{USER_NAME}} 👋</h1>
+
+      <p class="welcome-text">
+        شكراً لانضمامك إلى عائلة TaxiGo! نحن سعداء جداً بانضمامك إلينا كـ 
+        <span class="highlight">{{USER_ROLE}}</span> في نظامنا.
+      </p>
+
+      <div class="info-card">
+        <div class="info-item">
+          <strong>بريدك الإلكتروني:</strong> 
+          <span class="highlight">{{email}}</span>
+        </div>
+
+        {{#if_eq USER_ROLE "سائق"}}
+        <div class="info-item">
+          <strong>مكتب التكاسي:</strong> 
+          <span class="highlight">{{OFFICE_NAME}}</span>
+        </div>
+        <div class="info-item">
+          <strong>رقم الرخصة:</strong> 
+          <span class="highlight">{{LICENSE_NUMBER}}</span>
+        </div>
+        {{/if_eq}}
+      </div>
+
+      <div class="steps">
+        <h3>لتبدأ رحلتك معنا:</h3>
+
+        <div class="step">
+          <div class="step-number">1</div>
+          <div>قم بتسجيل الدخول إلى حسابك</div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <div>أكمل ملفك الشخصي</div>
+        </div>
+
+        {{#if_eq USER_ROLE "سائق"}}
+        <div class="step">
+          <div class="step-number">3</div>
+          <div>قم برفع صور الرخصة ووثائق السيارة</div>
+        </div>
+        {{/if_eq}}
+
+        <div class="step">
+          <div class="step-number">{{#if_eq USER_ROLE "سائق"}}4{{else}}3{{/if_eq}}</div>
+          <div>ابدأ باستخدام النظام!</div>
+        </div>
+      </div>
+
+      <a href="{{LOGIN_LINK}}" class="btn">تسجيل الدخول إلى حسابك</a>
+
+      <p style="text-align: center; color: #718096;">
+        إذا واجهتك أي مشكلة، لا تتردد في التواصل مع فريق الدعم لدينا.
+      </p>
+    </div>
+
+    <div class="footer">
+      <p>© TaxiGo. جميع الحقوق محفوظة</p>
+      <p>هذه الرسالة تلقائية، يرجى عدم الرد عليها</p>
+    </div>
+  </div>
+</body>
+</html>
